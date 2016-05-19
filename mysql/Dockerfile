@@ -1,0 +1,1 @@
+FROM image: mysql:5.6
