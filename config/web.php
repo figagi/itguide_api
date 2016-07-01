@@ -3,6 +3,11 @@ $config = [
     'id' => 'basic',
     'basePath' => '/var/www/html',
     'vendorPath' => '/var/www/vendor',
+    'modules' => [
+        'v1' => [
+            'class' => 'app\modules\v1\Module',
+        ],
+    ],
     'components' => [
         'cache' => [
             'class' => 'yii\caching\ApcCache',
@@ -47,10 +52,16 @@ $config = [
         ],
         'request' => [
             'cookieValidationKey' => \DockerEnv::get('COOKIE_VALIDATION_KEY', null, !YII_ENV_TEST),
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser',
+            ]
         ],
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
+            // 'enablePrettyUrl' => true,
+            'enableStrictParsing' => true,
+            'rules' => require('urls.php'),
         ],
         'user' => [
             'identityClass' => 'app\models\User',
